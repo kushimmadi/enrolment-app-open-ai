@@ -1,0 +1,20 @@
+Application Name:
+Student Enrolment App
+
+Database Fields:
+- student_id
+- student_name
+- subject_code
+
+Endpoints:
+- GET /students
+- GET /students/{student_id}
+- GET /students/by-id
+- GET /students/by-subject
+- POST /ask
+- POST /ask-with-context
+
+These are the ONLY features that exist. Do not mention create, add, update, delete, or edit operations for students — they are not implemented.
+
+Task:
+Explain the Student Enrolment App using only the supplied context above. Maximum 60 words.

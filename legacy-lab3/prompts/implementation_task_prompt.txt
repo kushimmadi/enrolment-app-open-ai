@@ -1,0 +1,34 @@
+Application Name:
+Student Enrolment App
+
+Database Fields:
+- student_id
+- student_name
+- subject_code
+
+Important domain rule:
+- subject_code is NOT unique.
+- Multiple students may enrol in the same subject.
+- Never recommend a unique constraint on subject_code.
+
+Endpoints:
+- GET /students
+- GET /students/{student_id}
+- GET /students/by-id
+- GET /students/by-subject
+- POST /ask
+- POST /ask-with-context
+
+These are the ONLY endpoints that exist. Do not invent or recommend create, update, or delete operations for students.
+
+Validation Evidence:
+{{VALIDATION_EVIDENCE}}
+
+Task:
+Review the existing subject-code search feature and the live endpoint check results using the validation evidence above.
+
+Base your answer only on the Validation Evidence above — it already reflects real HTTP requests made to the running Flask app and real database checks. Do not claim to have made requests yourself, and do not rely on assumptions beyond that evidence. If the evidence indicates the app is not responding, say: Unable to verify live endpoint behavior.
+
+Output rules:
+- If the evidence does not support an improvement, write: No evidence-backed improvement identified.
+- Return exactly two bullet points, or the no-evidence sentence.

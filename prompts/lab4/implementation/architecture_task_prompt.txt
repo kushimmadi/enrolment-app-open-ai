@@ -1,0 +1,10 @@
+Review the proposed microservices architecture for frontend-service, enrolment-service, and database-service.
+Use the evidence below to identify:
+- responsibilities per service
+- ownership boundaries
+- dependencies and coupling
+- missing or overlapping responsibilities
+Distinguish clearly between observed evidence and assumptions.
+Provide a concise review and at most one or two practical recommendations.
+If something cannot be assessed from the evidence, mention that limitation explicitly.
+Reply in at most 30 words.

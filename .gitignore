@@ -1,0 +1,17 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv
+__pycache__/
+
+# Editor
+.vscode
+vscode
+
+# Databases
+*.db
+database-service/data/*.db

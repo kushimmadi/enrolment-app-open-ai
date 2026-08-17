@@ -1,0 +1,21 @@
+Review Target: {{REVIEW_TARGET}}
+
+The Flask app must be running. The evidence below comes from live HTTP requests and database validation.
+
+Live Validation Evidence:
+{{VALIDATION_EVIDENCE}}
+
+Task:
+Analyze the evidence above. Identify ONE precise, evidence-backed improvement for:
+- Input validation
+- Error handling
+- Response formatting
+- Edge case testing
+
+If the evidence shows the app is not responding: Say "Unable to verify live behavior."
+If no improvement is supported by the evidence: Say "No evidence-backed improvement identified."
+
+Output Format:
+- Return exactly two bullet points (Issue + Recommendation), or the no-evidence sentence.
+- Maximum 60 words total.
+- No explanations, no reasoning.

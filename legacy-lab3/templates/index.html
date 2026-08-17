@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Enrolment App</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<main class="app-shell">
+    <header class="app-header">
+        <h1>Student Enrolment App</h1>
+        <p>Use HTMX to query students and ask the local model.</p>
+    </header>
+
+    <div class="layout-grid">
+        <section class="card card-left">
+            <h2>Students</h2>
+
+            <button id="toggle-students-btn" type="button">
+                Show All Students
+            </button>
+
+            <div id="students-result" class="panel is-hidden"></div>
+
+            <h2>Find Student by ID</h2>
+
+            <form hx-get="/students/by-id" hx-target="#student-result">
+                <label for="student_id">Student ID</label>
+                <input id="student_id" name="student_id" type="number" min="1" placeholder="Enter student ID">
+                <button type="submit">Get Student</button>
+            </form>
+
+            <div id="student-result" class="panel"></div>
+
+            <h2>Find Students by Subject Code</h2>
+
+            <form hx-get="/students/by-subject" hx-target="#subject-result">
+                <label for="subject_code">Subject Code</label>
+                <input id="subject_code" name="subject_code" type="text" placeholder="Example: ASD101">
+                <button type="submit">Find Students</button>
+            </form>
+
+            <div id="subject-result" class="panel"></div>
+        </section>
+
+        <section class="card card-right">
+            <h2>Ask Local AI Agent</h2>
+
+            <form hx-post="/ask" hx-target="#agent-result">
+                <label for="question">Question</label>
+                <textarea id="question" name="question" rows="7">Explain what this Student Enrolment App does in one short paragraph.</textarea>
+                <button type="submit">Ask Local Agent</button>
+            </form>
+
+            <div id="agent-result" class="panel"></div>
+
+            <h2>Ask With Context</h2>
+
+            <form hx-post="/ask-with-context" hx-target="#context-result">
+                <label for="context-question">Question</label>
+                <textarea id="context-question" name="question" rows="4">Explain the Student Enrolment App.</textarea>
+                <button type="submit">Ask With Context</button>
+            </form>
+
+            <div id="context-result" class="panel"></div>
+        </section>
+    </div>
+</main>
+
+<script>
+const toggleStudentsBtn = document.getElementById("toggle-students-btn");
+const studentsPanel = document.getElementById("students-result");
+
+toggleStudentsBtn.addEventListener("click", () => {
+    const isHidden = studentsPanel.classList.contains("is-hidden");
+
+    if (isHidden) {
+        studentsPanel.classList.remove("is-hidden");
+        toggleStudentsBtn.textContent = "Hide All Students";
+
+        if (!studentsPanel.dataset.loaded) {
+            htmx.ajax("GET", "/students", {
+                target: "#students-result",
+                swap: "innerHTML"
+            });
+            studentsPanel.dataset.loaded = "true";
+        }
+    } else {
+        studentsPanel.classList.add("is-hidden");
+        toggleStudentsBtn.textContent = "Show All Students";
+    }
+});
+</script>
+
+</body>
+</html>

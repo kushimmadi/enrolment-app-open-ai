@@ -1,0 +1,27 @@
+Application Name:
+Student Enrolment App
+
+Database Schema:
+- student_id (integer, primary key)
+- student_name (text, required)
+- subject_code (text, required, NOT UNIQUE)
+
+Important Domain Rule:
+- subject_code is NOT unique.
+- Multiple students may enrol in the same subject.
+- Never recommend a unique constraint on subject_code.
+
+Endpoints (ONLY these exist):
+
+GET Endpoints (Read-Only):
+- GET /students
+- GET /students/{student_id}
+- GET /students/by-id
+- GET /students/by-subject
+
+POST Endpoints (AI Queries):
+- POST /ask
+- POST /ask-with-context
+
+Forbidden Operations:
+Do not mention or suggest create, add, update, delete, or edit operations for students — they are not implemented in this application.

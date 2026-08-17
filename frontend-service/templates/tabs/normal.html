@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Normal UI</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body { margin: 0; min-height: auto; background: transparent; }
+        .app-shell { max-width: none; padding: 0; }
+    </style>
+</head>
+<body>
+<main class="app-shell">
+    <section class="card">
+        <h2>Students</h2>
+
+        <button id="toggle-students-btn" type="button">
+            Show All Students
+        </button>
+
+        <div id="students-result" class="panel is-hidden"></div>
+
+        <h2>Find Student by ID</h2>
+
+        <form id="student-by-id-form">
+            <label for="student_id">Student ID</label>
+            <input id="student_id" name="student_id" type="number" min="1" placeholder="Enter student ID">
+            <button type="submit">Get Student</button>
+        </form>
+
+        <div id="student-result" class="panel"></div>
+
+        <h2>Find Students by Subject Code</h2>
+
+        <form id="students-by-subject-form">
+            <label for="subject_code">Subject Code</label>
+            <input id="subject_code" name="subject_code" type="text" placeholder="Example: ASD101">
+            <button type="submit">Find Students</button>
+        </form>
+
+        <div id="subject-result" class="panel"></div>
+    </section>
+</main>
+
+<script>
+const toggleStudentsBtn = document.getElementById("toggle-students-btn");
+const studentsPanel = document.getElementById("students-result");
+const studentByIdForm = document.getElementById("student-by-id-form");
+const studentsBySubjectForm = document.getElementById("students-by-subject-form");
+
+async function renderIntoPanel(panelId, url, options = {}) {
+    const panel = document.getElementById(panelId);
+
+    try {
+        const response = await fetch(url, options);
+        const body = await response.text();
+        panel.innerHTML = body;
+    } catch (error) {
+        panel.innerHTML = `<p>Request failed.</p><pre>${error}</pre>`;
+    }
+}
+
+toggleStudentsBtn.addEventListener("click", () => {
+    const isHidden = studentsPanel.classList.contains("is-hidden");
+
+    if (isHidden) {
+        studentsPanel.classList.remove("is-hidden");
+        toggleStudentsBtn.textContent = "Hide All Students";
+
+        if (!studentsPanel.dataset.loaded) {
+            renderIntoPanel("students-result", "http://localhost:5001/students");
+            studentsPanel.dataset.loaded = "true";
+        }
+    } else {
+        studentsPanel.classList.add("is-hidden");
+        toggleStudentsBtn.textContent = "Show All Students";
+    }
+});
+
+studentByIdForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(studentByIdForm);
+    const query = new URLSearchParams(formData).toString();
+    renderIntoPanel("student-result", `http://localhost:5001/students/by-id?${query}`);
+});
+
+studentsBySubjectForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(studentsBySubjectForm);
+    const query = new URLSearchParams(formData).toString();
+    renderIntoPanel("subject-result", `http://localhost:5001/students/by-subject?${query}`);
+});
+</script>
+</body>
+</html>

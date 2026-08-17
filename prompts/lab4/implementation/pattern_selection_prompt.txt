@@ -1,0 +1,22 @@
+Compare the following architecture styles:
+
+- Monolith
+- Layered Architecture
+- Microservices
+
+Evaluate each using:
+
+- scalability
+- maintainability
+- deployment complexity
+- operational complexity
+- team ownership
+- future growth
+
+Recommend one architecture style for the Student Enrolment System.
+
+Return exactly:
+
+Architecture:
+Reason:
+Trade-Offs:

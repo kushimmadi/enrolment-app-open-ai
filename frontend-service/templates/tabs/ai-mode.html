@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AI Mode</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body { margin: 0; min-height: auto; background: transparent; }
+        .app-shell { max-width: none; padding: 0; }
+    </style>
+</head>
+<body>
+<main class="app-shell">
+    <section class="card">
+        <h2>Ask Local AI Agent</h2>
+
+        <form id="ask-form">
+            <label for="question">Question</label>
+            <textarea id="question" name="question" rows="5">Explain what this Student Enrolment App does in one short paragraph.</textarea>
+            <button type="submit">Ask Local Agent</button>
+        </form>
+
+        <div id="agent-result" class="panel"></div>
+
+        <h2>Ask With Context</h2>
+
+        <form id="ask-with-context-form">
+            <label for="context-question">Question</label>
+            <textarea id="context-question" name="question" rows="4">Explain the Student Enrolment App.</textarea>
+            <button type="submit">Ask With Context</button>
+        </form>
+
+        <div id="context-result" class="panel"></div>
+
+        <h2>Architecture Review</h2>
+
+        <form id="architecture-review-form">
+            <label for="architecture_request">Request</label>
+            <textarea id="architecture_request" name="architecture_request" rows="4">Review service boundaries for frontend-service, enrolment-service, and database-service.</textarea>
+            <button type="submit">Run Architecture Review</button>
+        </form>
+
+        <div id="architecture-result" class="panel"></div>
+    </section>
+</main>
+
+<script>
+const askForm = document.getElementById("ask-form");
+const askWithContextForm = document.getElementById("ask-with-context-form");
+const architectureReviewForm = document.getElementById("architecture-review-form");
+
+async function renderIntoPanel(panelId, url, options = {}) {
+    const panel = document.getElementById(panelId);
+
+    try {
+        const response = await fetch(url, options);
+        const body = await response.text();
+        panel.innerHTML = body;
+    } catch (error) {
+        panel.innerHTML = `<p>Request failed.</p><pre>${error}</pre>`;
+    }
+}
+
+askForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new URLSearchParams(new FormData(askForm));
+    renderIntoPanel("agent-result", "http://localhost:5001/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData,
+    });
+});
+
+askWithContextForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new URLSearchParams(new FormData(askWithContextForm));
+    renderIntoPanel("context-result", "http://localhost:5001/ask-with-context", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData,
+    });
+});
+
+architectureReviewForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new URLSearchParams(new FormData(architectureReviewForm));
+    renderIntoPanel("architecture-result", "http://localhost:5001/architecture-review", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData,
+    });
+});
+</script>
+</body>
+</html>
